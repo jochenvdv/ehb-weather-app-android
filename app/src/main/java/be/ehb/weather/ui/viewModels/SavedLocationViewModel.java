@@ -24,8 +24,8 @@ public class SavedLocationViewModel extends ViewModel {
         savedLocations = savedLocationRepository.getSavedLocations();
     }
 
-    public void createSavedLocation(SavedLocation savedLocation) {
-        savedLocationRepository.createSavedLocation(savedLocation);
+    public void createSavedLocation(SavedLocation location) {
+        savedLocationRepository.createSavedLocation(location);
     }
 
     public void deleteSavedLocation(SavedLocation savedLocation) {

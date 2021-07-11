@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import be.ehb.weather.models.NamedLocation;
+
 @Entity(tableName = "saved_locations")
 public class SavedLocation {
     @PrimaryKey(autoGenerate = true)
@@ -53,5 +55,13 @@ public class SavedLocation {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public static SavedLocation fromNamedLocation(NamedLocation location) {
+        return new SavedLocation(
+                location.getName(),
+                location.getLatitude(),
+                location.getLongitude()
+        );
     }
 }
