@@ -40,9 +40,9 @@ public class OpenWeatherApiClient {
         Call<LocationForecast> call = api.getForecastForLocation(
                 latitude,
                 longitude,
-                appId,
                 DEFAULT_LANGUAGE,
-                DEFAULT_UNITS
+                DEFAULT_UNITS,
+                appId
         );
 
         call.enqueue(new Callback<LocationForecast>() {
@@ -54,6 +54,7 @@ public class OpenWeatherApiClient {
             @Override
             public void onFailure(Call<LocationForecast> call, Throwable t) {
                 // TODO: handle error
+                System.out.println("error");
             }
         });
 

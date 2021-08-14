@@ -9,14 +9,11 @@ import be.ehb.weather.network.resources.LocationForecast;
 public class ForecastRepository {
     private OpenWeatherApiClient apiClient;
 
-    public ForecastRepository() {
-        apiClient = new OpenWeatherApiClient("");
+    public ForecastRepository(String appId) {
+        apiClient = new OpenWeatherApiClient(appId);
     }
 
-    public LiveData<LocationForecast> getForecastForLocation(SavedLocation location) {
-        return apiClient.getForecastForLocation(
-                location.getLatitude(),
-                location.getLongitude()
-        );
+    public LiveData<LocationForecast> getForecastForLocation(double latitude, double longitude) {
+        return apiClient.getForecastForLocation(latitude, longitude);
     }
 }

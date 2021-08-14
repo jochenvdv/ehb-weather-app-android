@@ -1,7 +1,9 @@
 package be.ehb.weather.network.resources;
 
+import java.util.List;
+
 public class ForecastData {
-    private WeatherConditionData weather;
+    private List<WeatherConditionData> weather;
     private TemperatureDataResponse temp;
     private long dt;
     private long sunrise;
@@ -13,11 +15,11 @@ public class ForecastData {
     private int windDeg;
     private int humidity;
 
-    public WeatherConditionData getWeather() {
+    public List<WeatherConditionData> getWeather() {
         return weather;
     }
 
-    public void setWeather(WeatherConditionData weather) {
+    public void setWeather(List<WeatherConditionData> weather) {
         this.weather = weather;
     }
 

@@ -2,8 +2,6 @@ package be.ehb.weather.network.resources;
 
 import java.util.List;
 
-import be.ehb.weather.models.LocationForecast;
-
 public class LocationForecast {
     private double lat;
     private double lon;
@@ -40,9 +38,5 @@ public class LocationForecast {
 
     public void setDaily(List<ForecastData> daily) {
         this.daily = daily;
-    }
-
-    public static LocationForecast toLocationForecast() {
-        return new LocationForecast();
     }
 }

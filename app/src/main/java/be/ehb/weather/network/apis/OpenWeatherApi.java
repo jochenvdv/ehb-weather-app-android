@@ -6,14 +6,14 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface OpenWeatherApi {
-    String BASE_URL = "https://api.openweathermap.org/data/2.5";
+    String BASE_URL = "https://api.openweathermap.org/";
 
-    @GET("/onecall")
+    @GET("/data/2.5/onecall")
     Call<LocationForecast> getForecastForLocation(
             @Query("lat") double latitude,
             @Query("lon") double longitude,
-            @Query("appid") String appId,
             @Query("lang") String language,
-            @Query("units") String units
+            @Query("units") String units,
+            @Query("appid") String appId
     );
 }
