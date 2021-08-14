@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import be.ehb.weather.models.GeocodedNamedLocation;
 import be.ehb.weather.models.NamedLocation;
 
 @Entity(tableName = "saved_locations")
@@ -57,7 +58,7 @@ public class SavedLocation {
         this.longitude = longitude;
     }
 
-    public static SavedLocation fromNamedLocation(NamedLocation location) {
+    public static SavedLocation fromGeocodedNamedLocation(GeocodedNamedLocation location) {
         return new SavedLocation(
                 location.getName(),
                 location.getLatitude(),
