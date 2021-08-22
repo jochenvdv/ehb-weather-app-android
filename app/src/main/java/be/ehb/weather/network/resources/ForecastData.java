@@ -11,9 +11,10 @@ public class ForecastData {
     private int clouds;
     private double rain;
     private double uvi;
-    private double windSpeed;
+    private int windSpeed;
     private int windDeg;
     private int humidity;
+    private int visibility;
 
     public List<WeatherConditionData> getWeather() {
         return weather;
@@ -79,11 +80,11 @@ public class ForecastData {
         this.uvi = uvi;
     }
 
-    public double getWindSpeed() {
+    public int getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(double windSpeed) {
+    public void setWindSpeed(int windSpeed) {
         this.windSpeed = windSpeed;
     }
 
@@ -101,5 +102,13 @@ public class ForecastData {
 
     public void setHumidity(int humidity) {
         this.humidity = humidity;
+    }
+
+    public int getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(int visibility) {
+        this.visibility = visibility;
     }
 }

@@ -1,16 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activities.HomeActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="-1dp"
-        tools:layout_editor_absoluteY="359dp"></LinearLayout>
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/locationDetail_summaryHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:text="TextView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/locationDetail_summaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="TextView"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/locationDetail_summaryText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="TextView"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/locationDetail_summaryText3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="TextView"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/locationDetail_detailsHeading"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="TextView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="163dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/locationDetail_detailsText"
+                    android:layout_width="208dp"
+                    android:layout_height="match_parent"
+                    android:padding="15dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/locationDetail_detailsText2"
+                    android:layout_width="197dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="15dp"
+                    android:text="TextView" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/locationDetail_forecastHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/locationDetail_forecastText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/locationDetail_saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Button"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="bottom|center" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -9,13 +9,14 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import be.ehb.weather.database.entities.SavedLocation;
+import be.ehb.weather.models.GeocodedNamedLocation;
 import be.ehb.weather.repositories.SavedLocationRepository;
 
-public class SavedLocationViewModel extends ViewModel {
+public class SavedLocationsListViewModel extends ViewModel {
     private final SavedLocationRepository savedLocationRepository;
     private LiveData<List<SavedLocation>> savedLocations;
 
-    public SavedLocationViewModel(
+    public SavedLocationsListViewModel(
             @NonNull Application application,
             SavedLocationRepository savedLocationRepository
     ) {
@@ -28,8 +29,8 @@ public class SavedLocationViewModel extends ViewModel {
         savedLocationRepository.createSavedLocation(location);
     }
 
-    public void deleteSavedLocation(SavedLocation savedLocation) {
-        savedLocationRepository.deleteSavedLocation(savedLocation);
+    public void deleteSavedLocation(GeocodedNamedLocation geocodedNamedLocation) {
+        savedLocationRepository.deleteSavedLocation(geocodedNamedLocation);
     }
 
     public LiveData<List<SavedLocation>> getSavedLocations() {

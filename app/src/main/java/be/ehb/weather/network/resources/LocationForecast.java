@@ -39,4 +39,8 @@ public class LocationForecast {
     public void setDaily(List<ForecastData> daily) {
         this.daily = daily;
     }
+
+    public ForecastData getToday() {
+        return daily.get(0);
+    }
 }

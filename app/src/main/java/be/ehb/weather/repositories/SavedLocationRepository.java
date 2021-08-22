@@ -10,6 +10,7 @@ import java.util.concurrent.Executor;
 import be.ehb.weather.database.WeatherDatabase;
 import be.ehb.weather.database.daos.SavedLocationDao;
 import be.ehb.weather.database.entities.SavedLocation;
+import be.ehb.weather.models.GeocodedNamedLocation;
 
 public class SavedLocationRepository {
     private Executor executor;
@@ -26,11 +27,15 @@ public class SavedLocationRepository {
         executor.execute(() -> savedLocationDao.create(savedLocation));
     }
 
-    public void deleteSavedLocation(SavedLocation savedLocation) {
-        executor.execute(() -> savedLocationDao.delete(savedLocation));
+    public void deleteSavedLocation(GeocodedNamedLocation geocodedNamedLocation) {
+        executor.execute(() -> savedLocationDao.deleteByPlaceId(geocodedNamedLocation.getPlaceId()));
     }
 
     public LiveData<List<SavedLocation>> getSavedLocations() {
         return savedLocations;
+    }
+
+    public LiveData<Boolean> isSavedLocation(GeocodedNamedLocation geocodedNamedLocation) {
+        return savedLocationDao.existsByPlaceId(geocodedNamedLocation.getPlaceId());
     }
 }

@@ -15,15 +15,18 @@ public class SavedLocation {
     private String name;
     private double latitude;
     private double longitude;
+    private String placeId;
 
     public SavedLocation(
             @NonNull String name,
             @NonNull double latitude,
-            @NonNull double longitude
+            @NonNull double longitude,
+            @NonNull String placeId
     ) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.placeId = placeId;
     }
 
     public long getId() {
@@ -58,11 +61,24 @@ public class SavedLocation {
         this.longitude = longitude;
     }
 
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
+
     public static SavedLocation fromGeocodedNamedLocation(GeocodedNamedLocation location) {
         return new SavedLocation(
                 location.getName(),
                 location.getLatitude(),
-                location.getLongitude()
+                location.getLongitude(),
+                location.getPlaceId()
         );
+    }
+
+    public NamedLocation toNamedLocation() {
+        return new NamedLocation(name, placeId);
     }
 }
