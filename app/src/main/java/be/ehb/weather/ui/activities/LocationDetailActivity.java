@@ -1,6 +1,7 @@
 package be.ehb.weather.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -34,6 +35,8 @@ public class LocationDetailActivity extends AppCompatActivity {
     private SavedLocationRepository savedLocationRepository;
     private ForecastRepository forecastRepository;
     private LocationDetailViewModel viewModel;
+    private String locationName;
+    private String placeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         );
 
         setContentView(R.layout.activity_locationdetail);
+
         TextView summaryHeading = (TextView) findViewById(R.id.locationDetail_summaryHeading);
         summaryHeading.setText(
                 Html.fromHtml(
@@ -88,6 +92,10 @@ public class LocationDetailActivity extends AppCompatActivity {
                     )
                 )
         );
+
+        Intent intent = getIntent();
+        locationName = intent.getStringExtra(SearchLocationActivity.LOCATION_NAME);
+        placeId = intent.getStringExtra(SearchLocationActivity.PLACE_ID);
     }
 
     @Override
@@ -98,7 +106,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         LifecycleOwner activity = this;
 
         viewModel.getNamedLocation(
-                new NamedLocation("Zwijndrecht, Belgium", "ChIJfYjDv472w0cRuIqogoRErz4")
+                new NamedLocation(locationName, placeId)
         ).observe(this, new Observer<GeocodedNamedLocation>() {
             @Override
             public void onChanged(GeocodedNamedLocation geocodedNamedLocation) {
@@ -171,19 +179,14 @@ public class LocationDetailActivity extends AppCompatActivity {
                                 Locale.GERMAN,
                                 "<strong>%s:</strong> %.0f °C<br />"
                                 + "<strong>%s:</strong> %.0f °C<br />"
-                                + "<strong>%s:</strong> %d %%<br />"
-                                + "<strong>%s:</strong> %d %%<br />"
-                                + "<strong>%s:</strong> %d km/h<br />",
+                                + "<strong>%s:</strong> %d %%<br />",
                                 context.getResources().getString(R.string.min_temperature_label),
                                 locationForecast.getToday().getTemp().getMin(),
                                 context.getResources().getString(R.string.max_temperature_label),
                                 locationForecast.getToday().getTemp().getMax(),
                                 context.getResources().getString(R.string.cloudiness_label),
-                                locationForecast.getToday().getClouds(),
-                                context.getResources().getString(R.string.humidity_label),
-                                locationForecast.getToday().getHumidity(),
-                                context.getResources().getString(R.string.wind_speed_label),
-                                locationForecast.getToday().getWindSpeed()
+                                locationForecast.getToday().getClouds()
+
                         )
                 )
         );
@@ -193,23 +196,13 @@ public class LocationDetailActivity extends AppCompatActivity {
                 Html.fromHtml(
                         String.format(
                                 Locale.GERMAN,
-                                        "<strong>%s:</strong> %.0f<br />"
-                                        + "<strong>%s:</strong> %s<br />"
-                                        + "<strong>%s:</strong> %s<br />"
-                                        + "<strong>%s:</strong> %d %s<br />"
-                                        + "<strong>%s:</strong> %d<br />",
+                                "<strong>%s:</strong> %.0f<br />"
+                                + "<strong>%s:</strong> %d %%<br />",
                                 context.getResources().getString(R.string.uv_index_label),
                                 locationForecast.getToday().getUvi(),
-                                context.getResources().getString(R.string.sunrise_label),
-                                locationForecast.getToday().getSunrise(),
-                                context.getResources().getString(R.string.sunset_label),
-                                locationForecast.getToday().getSunset(),
-                                context.getResources().getString(R.string.visibility_label),
-                                locationForecast.getToday().getVisibility(),
-                                context.getResources().getString(R.string.meters_label),
-                                context.getResources().getString(R.string.wind_degree_label),
-                                locationForecast.getToday().getWindDeg()
-                                )
+                                context.getResources().getString(R.string.humidity_label),
+                                locationForecast.getToday().getHumidity()
+                        )
                 )
         );
     }
@@ -226,12 +219,12 @@ public class LocationDetailActivity extends AppCompatActivity {
                                 + "<strong>%s:</strong> %s<br />"
                                 + "<strong>%s:</strong> %.0f%%<br />"
                                 + "<strong>%s:</strong> %d%%<br />",
-                                context.getResources().getString(R.string.condition_label),
+                                context.getResources().getString(R.string.temperature_label),
                                 context.getResources().getString(R.string.min_label),
                                 locationForecast.getDaily().get(1).getTemp().getMin(),
                                 context.getResources().getString(R.string.max_label),
                                 locationForecast.getDaily().get(1).getTemp().getMax(),
-                                context.getResources().getString(R.string.wind_degree_label),
+                                context.getResources().getString(R.string.condition_label),
                                 locationForecast.getDaily().get(1).getWeather().get(0).getDescription(),
                                 context.getResources().getString(R.string.rain_label),
                                 locationForecast.getDaily().get(1).getRain(),
@@ -282,4 +275,16 @@ public class LocationDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

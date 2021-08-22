@@ -10,15 +10,14 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <TextView
+        android:id="@+id/locationresult_name"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/locationresults_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+        android:padding="15dp" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

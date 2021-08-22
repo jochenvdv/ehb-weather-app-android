@@ -61,13 +61,11 @@ public class LocationRepository {
                 }
 
                 results.postValue(locations);
-                System.out.println("ok");
             }
 
             @Override
             public void onFailure(Throwable e) {
                 // TODO: handle error
-                System.out.println("error");
             }
         });
 
