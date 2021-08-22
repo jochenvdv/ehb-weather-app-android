@@ -15,14 +15,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OpenWeatherApiClient {
-    private static final String DEFAULT_LANGUAGE = "en";
     private static final String DEFAULT_UNITS = "metric";
 
     private final String appId;
+    private final String language;
     private final OpenWeatherApi api;
 
-    public OpenWeatherApiClient(String appId) {
+    public OpenWeatherApiClient(String appId, String language) {
         this.appId = appId;
+        this.language = language;
 
         Gson gson = new GsonBuilder()
                 .create();
@@ -40,7 +41,7 @@ public class OpenWeatherApiClient {
         Call<LocationForecast> call = api.getForecastForLocation(
                 latitude,
                 longitude,
-                DEFAULT_LANGUAGE,
+                language,
                 DEFAULT_UNITS,
                 appId
         );

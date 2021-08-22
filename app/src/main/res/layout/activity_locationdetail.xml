@@ -24,8 +24,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:paddingTop="15dp"
-                android:text="TextView" />
+                android:paddingTop="15dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +40,6 @@
                     android:paddingTop="5dp"
                     android:paddingRight="15dp"
                     android:paddingBottom="5dp"
-                    android:text="TextView"
                     android:textSize="18sp" />
 
                 <TextView
@@ -53,7 +51,6 @@
                     android:paddingTop="5dp"
                     android:paddingRight="15dp"
                     android:paddingBottom="5dp"
-                    android:text="TextView"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -64,16 +61,22 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:text="TextView"
                 android:textSize="18sp" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:paddingBottom="10dp" />
 
             <TextView
                 android:id="@+id/locationDetail_detailsHeading"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:text="TextView" />
+                android:paddingTop="15dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,19 +85,23 @@
 
                 <TextView
                     android:id="@+id/locationDetail_detailsText"
-                    android:layout_width="208dp"
+                    android:layout_width="195dp"
                     android:layout_height="match_parent"
-                    android:padding="15dp"
-                    android:text="TextView" />
+                    android:padding="15dp" />
 
                 <TextView
                     android:id="@+id/locationDetail_detailsText2"
                     android:layout_width="197dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="15dp"
-                    android:text="TextView" />
+                    android:padding="15dp" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/locationDetail_forecastHeading"
@@ -102,15 +109,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:text="TextView" />
+                android:paddingTop="15dp" />
 
             <TextView
                 android:id="@+id/locationDetail_forecastText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:text="TextView" />
+                android:paddingLeft="15dp" />
 
         </LinearLayout>
 

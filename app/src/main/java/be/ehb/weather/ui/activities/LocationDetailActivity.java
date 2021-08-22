@@ -1,5 +1,6 @@
 package be.ehb.weather.ui.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -38,12 +39,17 @@ public class LocationDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Context context = getApplicationContext();
+
         locationRepository = new LocationRepository(Credentials.GOOGLE_PLACES_API_KEY);
         savedLocationRepository = new SavedLocationRepository(
                 getApplication(),
                 Executors.newSingleThreadExecutor()
         );
-        forecastRepository = new ForecastRepository(Credentials.OPENWEATHER_API_KEY);
+        forecastRepository = new ForecastRepository(
+                Credentials.OPENWEATHER_API_KEY,
+                Locale.getDefault().getLanguage()
+        );
 
         viewModel = new LocationDetailViewModel(
                 getApplication(),
@@ -54,19 +60,41 @@ public class LocationDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_locationdetail);
         TextView summaryHeading = (TextView) findViewById(R.id.locationDetail_summaryHeading);
-        summaryHeading.setText(Html.fromHtml("<h1>Summary</h1>"));
+        summaryHeading.setText(
+                Html.fromHtml(
+                        String.format(
+                                "<h1>%s</h1>",
+                                context.getResources().getString(R.string.summary_heading)
+                        )
+                )
+        );
 
         TextView detailsHeading = (TextView) findViewById(R.id.locationDetail_detailsHeading);
-        detailsHeading.setText(Html.fromHtml("<h1>Details</h1>"));
+        detailsHeading.setText(
+                Html.fromHtml(
+                        String.format(
+                                "<h1>%s</h1>",
+                                context.getResources().getString(R.string.details_heading)
+                        )
+                )
+        );
 
         TextView forecastHeading = (TextView) findViewById(R.id.locationDetail_forecastHeading);
-        forecastHeading.setText(Html.fromHtml("<h1>Forecast for tomorrow</h1>"));
+        forecastHeading.setText(
+                Html.fromHtml(
+                    String.format(
+                            "<h1>%s</h1>",
+                            context.getResources().getString(R.string.forecast_heading)
+                    )
+                )
+        );
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        Context context = getApplicationContext();
         LifecycleOwner activity = this;
 
         viewModel.getNamedLocation(
@@ -77,7 +105,7 @@ public class LocationDetailActivity extends AppCompatActivity {
                 ActionBar actionBar = getSupportActionBar();
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setTitle(geocodedNamedLocation.getName());
-                actionBar.setSubtitle("Location forecast detail");
+                actionBar.setSubtitle(context.getResources().getString(R.string.location_detail_subtitle));
 
                 viewModel.getLocationForecast(geocodedNamedLocation)
                         .observe(activity, new Observer<LocationForecast>() {
@@ -94,12 +122,15 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
     private void showSummary(LocationForecast locationForecast) {
+        Context context = getApplicationContext();
+
         TextView summary1 = (TextView) findViewById(R.id.locationDetail_summaryText);
         summary1.setText(
                 Html.fromHtml(
                         String.format(
                                 Locale.GERMAN,
-                                "<p><strong>Temperatuur</strong><br />%.0f °C</p>",
+                                "<p><strong>%s</strong><br />%.0f °C</p>",
+                                context.getResources().getString(R.string.temperature_label),
                                 locationForecast.getToday().getTemp().getDay()
                         )
                 )
@@ -110,7 +141,8 @@ public class LocationDetailActivity extends AppCompatActivity {
                 Html.fromHtml(
                         String.format(
                                 Locale.GERMAN,
-                                "<p><strong>Neerslagkans</strong><br />%.0f %%</p>",
+                                "<p><strong>%s</strong><br />%.0f %%</p>",
+                                context.getResources().getString(R.string.rain_label),
                                 locationForecast.getToday().getRain()
                         )
                 )
@@ -121,7 +153,8 @@ public class LocationDetailActivity extends AppCompatActivity {
                 Html.fromHtml(
                         String.format(
                                 Locale.GERMAN,
-                                "<p><strong>Conditie</strong><br />%s</p>",
+                                "<p><strong>%s</strong><br />%s</p>",
+                                context.getResources().getString(R.string.condition_label),
                                 locationForecast.getToday().getWeather().get(0).getDescription()
                         )
                 )
@@ -129,20 +162,27 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
     private void showDetails(LocationForecast locationForecast) {
+        Context context = getApplicationContext();
+
         TextView details = (TextView) findViewById(R.id.locationDetail_detailsText);
         details.setText(
                 Html.fromHtml(
                         String.format(
                                 Locale.GERMAN,
-                                "<strong>Min. temperature:</strong> %.0f °C<br />"
-                                + "<strong>Max. temperature:</strong> %.0f °C<br />"
-                                + "<strong>Clouds:</strong> %d %%<br />"
-                                + "<strong>Humidity:</strong> %d %%<br />"
-                                + "<strong>Wind speed:</strong> %d km/h<br />",
+                                "<strong>%s:</strong> %.0f °C<br />"
+                                + "<strong>%s:</strong> %.0f °C<br />"
+                                + "<strong>%s:</strong> %d %%<br />"
+                                + "<strong>%s:</strong> %d %%<br />"
+                                + "<strong>%s:</strong> %d km/h<br />",
+                                context.getResources().getString(R.string.min_temperature_label),
                                 locationForecast.getToday().getTemp().getMin(),
+                                context.getResources().getString(R.string.max_temperature_label),
                                 locationForecast.getToday().getTemp().getMax(),
+                                context.getResources().getString(R.string.cloudiness_label),
                                 locationForecast.getToday().getClouds(),
+                                context.getResources().getString(R.string.humidity_label),
                                 locationForecast.getToday().getHumidity(),
+                                context.getResources().getString(R.string.wind_speed_label),
                                 locationForecast.getToday().getWindSpeed()
                         )
                 )
@@ -153,35 +193,49 @@ public class LocationDetailActivity extends AppCompatActivity {
                 Html.fromHtml(
                         String.format(
                                 Locale.GERMAN,
-                                        "<strong>UV index:</strong> %.0f<br />"
-                                        + "<strong>Sunrise:</strong> %s<br />"
-                                        + "<strong>Sunset:</strong> %s<br />"
-                                        + "<strong>Visibility:</strong> %d meters<br />"
-                                        + "<strong>Wind degree:</strong> %d<br />",
+                                        "<strong>%s:</strong> %.0f<br />"
+                                        + "<strong>%s:</strong> %s<br />"
+                                        + "<strong>%s:</strong> %s<br />"
+                                        + "<strong>%s:</strong> %d %s<br />"
+                                        + "<strong>%s:</strong> %d<br />",
+                                context.getResources().getString(R.string.uv_index_label),
                                 locationForecast.getToday().getUvi(),
+                                context.getResources().getString(R.string.sunrise_label),
                                 locationForecast.getToday().getSunrise(),
+                                context.getResources().getString(R.string.sunset_label),
                                 locationForecast.getToday().getSunset(),
+                                context.getResources().getString(R.string.visibility_label),
                                 locationForecast.getToday().getVisibility(),
+                                context.getResources().getString(R.string.meters_label),
+                                context.getResources().getString(R.string.wind_degree_label),
                                 locationForecast.getToday().getWindDeg()
-                        )
+                                )
                 )
         );
     }
 
     private void showForecast(LocationForecast locationForecast) {
+        Context context = getApplicationContext();
+
         TextView tomorrow = (TextView) findViewById(R.id.locationDetail_forecastText);
         tomorrow.setText(
                 Html.fromHtml(
                         String.format(
                                 Locale.GERMAN,
-                                "<strong>Temperature:</strong> min %.0f °C, max %.0f °C<br />"
-                                + "<strong>Condition:</strong> %s<br />"
-                                + "<strong>Neerslagkans:</strong> %.0f%%<br />"
-                                + "<strong>Bewolking:</strong> %d%%<br />",
+                                "<strong>%s:</strong> %s %.0f °C, %s %.0f °C<br />"
+                                + "<strong>%s:</strong> %s<br />"
+                                + "<strong>%s:</strong> %.0f%%<br />"
+                                + "<strong>%s:</strong> %d%%<br />",
+                                context.getResources().getString(R.string.condition_label),
+                                context.getResources().getString(R.string.min_label),
                                 locationForecast.getDaily().get(1).getTemp().getMin(),
+                                context.getResources().getString(R.string.max_label),
                                 locationForecast.getDaily().get(1).getTemp().getMax(),
+                                context.getResources().getString(R.string.wind_degree_label),
                                 locationForecast.getDaily().get(1).getWeather().get(0).getDescription(),
+                                context.getResources().getString(R.string.rain_label),
                                 locationForecast.getDaily().get(1).getRain(),
+                                context.getResources().getString(R.string.cloudiness_label),
                                 locationForecast.getDaily().get(1).getClouds()
                         )
                 )
@@ -189,7 +243,9 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
     private void configureButtonWhenUnsaved(Button button, GeocodedNamedLocation geocodedNamedLocation) {
-        button.setText("Save this location");
+        Context context = getApplicationContext();
+
+        button.setText(context.getResources().getString(R.string.save_this_location_button));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,7 +256,9 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
     private void configureButtonWhenSaved(Button button, GeocodedNamedLocation geocodedNamedLocation) {
-        button.setText("Forget this location");
+        Context context = getApplicationContext();
+
+        button.setText(context.getResources().getString(R.string.forget_this_location_button));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

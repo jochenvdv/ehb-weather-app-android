@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">EhbWeather</string>
+    <string name="temperature_label">Temperatuur</string>
+    <string name="rain_label">Neerslagkans</string>
+    <string name="uv_index_label">UV index</string>
+    <string name="sunrise_label">Zonsopkomst</string>
+    <string name="sunset_label">Zonsonderdag</string>
+    <string name="cloudiness_label">Bewolking</string>
+    <string name="humidity_label">Vochtigheid</string>
+    <string name="summary_heading">Weersoverzicht</string>
+    <string name="forecast_heading">Voorspelling voor morgen</string>
+    <string name="details_heading">Meer weersinformatie</string>
+    <string name="location_detail_subtitle">Gedetailleerde weersinformatie</string>
+    <string name="condition_label">Weerconditie</string>
+    <string name="min_temperature_label">Min. temperatuur</string>
+    <string name="max_temperature_label">Max. temperatuur</string>
+    <string name="wind_speed_label">Windsnelheid</string>
+    <string name="visibility_label">Zicht</string>
+    <string name="wind_degree_label">Windrichting</string>
+    <string name="min_label">min</string>
+    <string name="max_label">max</string>
+    <string name="save_this_location_button">Onthoud deze locatie</string>
+    <string name="forget_this_location_button">Vergeet deze locatie</string>
+    <string name="meters_label">meters</string>
+</resources>

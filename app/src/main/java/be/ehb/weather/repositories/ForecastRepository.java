@@ -9,8 +9,8 @@ import be.ehb.weather.network.resources.LocationForecast;
 public class ForecastRepository {
     private OpenWeatherApiClient apiClient;
 
-    public ForecastRepository(String appId) {
-        apiClient = new OpenWeatherApiClient(appId);
+    public ForecastRepository(String appId, String language) {
+        apiClient = new OpenWeatherApiClient(appId, language);
     }
 
     public LiveData<LocationForecast> getForecastForLocation(double latitude, double longitude) {

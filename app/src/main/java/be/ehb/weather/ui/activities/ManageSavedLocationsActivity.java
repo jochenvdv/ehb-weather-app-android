@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import be.ehb.weather.LocationsMain;
 import be.ehb.weather.R;
 
 public class ManageSavedLocationsActivity extends AppCompatActivity {
@@ -12,6 +11,5 @@ public class ManageSavedLocationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        LocationsMain.main(new String[0]);
     }
 }

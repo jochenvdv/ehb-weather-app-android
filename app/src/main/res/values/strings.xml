@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">EhbWeather</string>
+    <string name="temperature_label">Temperature</string>
+    <string name="rain_label">Chance of rain</string>
+    <string name="uv_index_label">UV index</string>
+    <string name="sunrise_label">Sunrise</string>
+    <string name="sunset_label">Sunset</string>
+    <string name="cloudiness_label">Cloudiness</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="summary_heading">Weather summary</string>
+    <string name="forecast_heading">Forecast for tomorrow</string>
+    <string name="details_heading">More weather info</string>
+    <string name="location_detail_subtitle">Detailed location forecast</string>
+    <string name="condition_label">Weather condition</string>
+    <string name="min_temperature_label">Min. temperature</string>
+    <string name="max_temperature_label">Max. temperature</string>
+    <string name="wind_speed_label">Wind speed</string>
+    <string name="visibility_label">Visibility</string>
+    <string name="wind_degree_label">Wind degree</string>
+    <string name="min_label">min</string>
+    <string name="max_label">max</string>
+    <string name="save_this_location_button">Save this location</string>
+    <string name="forget_this_location_button">Forget this location</string>
+    <string name="meters_label">meters</string>
 </resources>
