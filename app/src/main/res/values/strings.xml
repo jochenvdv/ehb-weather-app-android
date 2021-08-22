@@ -25,4 +25,6 @@
     <string name="meters_label">meters</string>
     <string name="home_subtitle">Weather overview</string>
     <string name="searchresults_title">Location search results</string>
+    <string name="savedlocations_heading">My saved locations</string>
+    <string name="savedlocations_empty">You don\'t have any saved locations yet</string>
 </resources>

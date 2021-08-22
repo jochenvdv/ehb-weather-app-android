@@ -24,11 +24,17 @@ public class SavedLocationRepository {
     }
 
     public void createSavedLocation(SavedLocation savedLocation) {
-        executor.execute(() -> savedLocationDao.create(savedLocation));
+        executor.execute(() -> {
+            savedLocationDao.create(savedLocation);
+            savedLocations = savedLocationDao.getAll();
+        });
     }
 
     public void deleteSavedLocation(GeocodedNamedLocation geocodedNamedLocation) {
-        executor.execute(() -> savedLocationDao.deleteByPlaceId(geocodedNamedLocation.getPlaceId()));
+        executor.execute(() -> {
+            savedLocationDao.deleteByPlaceId(geocodedNamedLocation.getPlaceId());
+            savedLocations = savedLocationDao.getAll();
+        });
     }
 
     public LiveData<List<SavedLocation>> getSavedLocations() {

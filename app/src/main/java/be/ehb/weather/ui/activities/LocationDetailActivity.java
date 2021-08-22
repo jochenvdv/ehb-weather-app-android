@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
@@ -31,6 +28,8 @@ import be.ehb.weather.repositories.SavedLocationRepository;
 import be.ehb.weather.ui.viewModels.LocationDetailViewModel;
 
 public class LocationDetailActivity extends AppCompatActivity {
+    public static final String LOCATION_NAME = "locationName";
+    public static final String PLACE_ID = "placeId";
     private LocationRepository locationRepository;
     private SavedLocationRepository savedLocationRepository;
     private ForecastRepository forecastRepository;
@@ -63,7 +62,7 @@ public class LocationDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_locationdetail);
 
-        TextView summaryHeading = (TextView) findViewById(R.id.locationDetail_summaryHeading);
+        TextView summaryHeading = (TextView) findViewById(R.id.locationSummary_summaryHeading);
         summaryHeading.setText(
                 Html.fromHtml(
                         String.format(
@@ -94,8 +93,8 @@ public class LocationDetailActivity extends AppCompatActivity {
         );
 
         Intent intent = getIntent();
-        locationName = intent.getStringExtra(SearchLocationActivity.LOCATION_NAME);
-        placeId = intent.getStringExtra(SearchLocationActivity.PLACE_ID);
+        locationName = intent.getStringExtra(LocationDetailActivity.LOCATION_NAME);
+        placeId = intent.getStringExtra(LocationDetailActivity.PLACE_ID);
     }
 
     @Override
@@ -132,7 +131,7 @@ public class LocationDetailActivity extends AppCompatActivity {
     private void showSummary(LocationForecast locationForecast) {
         Context context = getApplicationContext();
 
-        TextView summary1 = (TextView) findViewById(R.id.locationDetail_summaryText);
+        TextView summary1 = (TextView) findViewById(R.id.locationSummary_summaryText);
         summary1.setText(
                 Html.fromHtml(
                         String.format(
@@ -144,7 +143,7 @@ public class LocationDetailActivity extends AppCompatActivity {
                 )
         );
 
-        TextView summary2 = (TextView) findViewById(R.id.locationDetail_summaryText2);
+        TextView summary2 = (TextView) findViewById(R.id.locationSummary_summaryText2);
         summary2.setText(
                 Html.fromHtml(
                         String.format(
@@ -156,7 +155,7 @@ public class LocationDetailActivity extends AppCompatActivity {
                 )
         );
 
-        TextView summary3 = (TextView) findViewById(R.id.locationDetail_summaryText3);
+        TextView summary3 = (TextView) findViewById(R.id.locationSummary_summaryText3);
         summary3.setText(
                 Html.fromHtml(
                         String.format(

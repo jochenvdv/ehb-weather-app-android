@@ -25,8 +25,6 @@ import be.ehb.weather.ui.adapters.LocationResultAdapter;
 import be.ehb.weather.ui.viewModels.SearchViewModel;
 
 public class SearchLocationActivity extends AppCompatActivity {
-    public static final String LOCATION_NAME = "locationName";
-    public static final String PLACE_ID = "placeId";
     private SearchViewModel viewModel;
 
     public SearchLocationActivity() {

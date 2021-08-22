@@ -7,31 +7,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import be.ehb.weather.R;
+import be.ehb.weather.database.entities.SavedLocation;
+import be.ehb.weather.models.GeocodedNamedLocation;
 import be.ehb.weather.models.NamedLocation;
 import be.ehb.weather.ui.activities.LocationDetailActivity;
 import be.ehb.weather.ui.activities.SearchLocationActivity;
 
-public class LocationResultAdapter extends ArrayAdapter<NamedLocation> {
+public class SavedLocationListAdapter extends ArrayAdapter<SavedLocation> {
     private Activity activity;
 
-    public LocationResultAdapter(Activity activity, Context context, ArrayList<NamedLocation> locations) {
+    public SavedLocationListAdapter(Activity activity, Context context, ArrayList<SavedLocation> locations) {
         super(context, 0, locations);
         this.activity = activity;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NamedLocation location = getItem(position);
+        SavedLocation location = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
                                         .inflate(
-                                                R.layout.listitem_locationresult,
+                                                R.layout.listitem_savedlocation,
                                                 parent,
                                                 false
                                         );
@@ -41,10 +44,12 @@ public class LocationResultAdapter extends ArrayAdapter<NamedLocation> {
         locationName.setText(location.getName());
         locationName.setTag(location);
 
-        locationName.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button) convertView.findViewById(R.id.savedlocation_viewdetail);
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NamedLocation location = (NamedLocation) v.getTag();
+                SavedLocation location = (SavedLocation) locationName.getTag();
                 Intent intent = new Intent(getContext(), LocationDetailActivity.class);
                 intent.putExtra(LocationDetailActivity.LOCATION_NAME, location.getName());
                 intent.putExtra(LocationDetailActivity.PLACE_ID, location.getPlaceId());

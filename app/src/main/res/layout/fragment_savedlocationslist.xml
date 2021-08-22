@@ -11,6 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="-1dp"
-        tools:layout_editor_absoluteY="359dp"></LinearLayout>
+        tools:layout_editor_absoluteY="359dp">
+
+        <TextView
+            android:id="@+id/savedlocationslist_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp" />
+
+        <ListView
+            android:id="@+id/savedlocationslist_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

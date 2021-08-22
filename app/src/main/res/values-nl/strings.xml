@@ -25,4 +25,6 @@
     <string name="meters_label">meters</string>
     <string name="home_subtitle">Weersoverzicht</string>
     <string name="searchresults_title">Locatie zoekresultaten</string>
+    <string name="savedlocations_heading">Mijn opgeslagen locaties</string>
+    <string name="savedlocations_empty">Je hebt nog geen locaties opgeslagen</string>
 </resources>
