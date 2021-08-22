@@ -27,6 +27,7 @@ import be.ehb.weather.models.GeocodedNamedLocation;
 import be.ehb.weather.repositories.ForecastRepository;
 import be.ehb.weather.repositories.LocationRepository;
 import be.ehb.weather.repositories.SavedLocationRepository;
+import be.ehb.weather.ui.activities.HomeActivity;
 import be.ehb.weather.ui.adapters.LocationResultAdapter;
 import be.ehb.weather.ui.adapters.SavedLocationListAdapter;
 import be.ehb.weather.ui.viewModels.LocationDetailViewModel;
@@ -57,7 +58,7 @@ public class SavedLocationsListFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_savedlocationslist, container, false);
 
         adapter = new SavedLocationListAdapter(
-                getActivity(),
+                (HomeActivity) getActivity(),
                 getActivity().getApplicationContext(),
                 new ArrayList<>()
         );
@@ -68,6 +69,12 @@ public class SavedLocationsListFragment extends Fragment {
         Context context = getActivity().getApplicationContext();
 
         TextView heading = (TextView) rootView.findViewById(R.id.savedlocationslist_heading);
+        setHeading(heading, context);
+
+        return rootView;
+    }
+
+    private void setHeading(TextView heading, Context context) {
         heading.setText(
                 Html.fromHtml(
                         String.format(
@@ -76,23 +83,26 @@ public class SavedLocationsListFragment extends Fragment {
                         )
                 )
         );
-
-        return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        TextView heading = (TextView) rootView.findViewById(R.id.savedlocationslist_heading);
         Context context = getActivity().getApplicationContext();
 
-        savedLocationRepository.getSavedLocations().observeForever(new Observer<List<SavedLocation>>() {
+        savedLocationRepository.getSavedLocations().observe(getViewLifecycleOwner(), new Observer<List<SavedLocation>>() {
             @Override
             public void onChanged(List<SavedLocation> savedLocations) {
                 if (savedLocations.size() > 0) {
+                    setHeading(heading, context);
                     summarizedSavedLocation = savedLocations.get(0);
+                    HomeActivity homeActivity = (HomeActivity) getActivity();
+                    homeActivity.updateSummarizedLocation(summarizedSavedLocation);
                 } else {
-                    TextView heading = (TextView) rootView.findViewById(R.id.savedlocationslist_heading);
+                    summarizedSavedLocation = null;
+                    HomeActivity homeActivity = (HomeActivity) getActivity();
+                    homeActivity.updateSummarizedLocation(null);
                     heading.setText(
                             Html.fromHtml(
                                     String.format(

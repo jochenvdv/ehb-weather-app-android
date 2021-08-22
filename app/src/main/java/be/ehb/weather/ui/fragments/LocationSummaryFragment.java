@@ -19,7 +19,9 @@ import java.util.concurrent.Executors;
 
 import be.ehb.weather.R;
 import be.ehb.weather.config.Credentials;
+import be.ehb.weather.database.entities.SavedLocation;
 import be.ehb.weather.models.GeocodedNamedLocation;
+import be.ehb.weather.network.resources.LocationForecast;
 import be.ehb.weather.repositories.ForecastRepository;
 import be.ehb.weather.repositories.LocationRepository;
 import be.ehb.weather.repositories.SavedLocationRepository;
@@ -31,7 +33,7 @@ public class LocationSummaryFragment extends Fragment {
     private ForecastRepository forecastRepository;
     private LocationDetailViewModel viewModel;
 
-    private LiveData<GeocodedNamedLocation> location;
+    private MutableLiveData<GeocodedNamedLocation> location;
 
     private TextView locationNameLabel;
 
@@ -44,6 +46,18 @@ public class LocationSummaryFragment extends Fragment {
     {
         View rootView = inflater.inflate(R.layout.fragment_locationsummary, container, false);
         locationNameLabel = rootView.findViewById(R.id.locationSummary_summaryHeading);
+
+        Context context = getActivity().getApplicationContext();
+
+        locationNameLabel.setText(
+                Html.fromHtml(
+                        String.format(
+                                "<h1>%s</h1><em>%s</em>",
+                                context.getResources().getString(R.string.summary_heading),
+                                context.getResources().getString(R.string.savedlocations_empty)
+                        )
+                )
+        );
 
         return rootView;
     }
@@ -77,20 +91,89 @@ public class LocationSummaryFragment extends Fragment {
         super.onResume();
         Context context = getActivity().getApplicationContext();
 
-        location.observeForever(new Observer<GeocodedNamedLocation>() {
+        TextView temperature = (TextView) getActivity().findViewById(R.id.locationSummary_summaryText);
+        TextView rain = (TextView) getActivity().findViewById(R.id.locationSummary_summaryText2);
+        TextView condition = (TextView) getActivity().findViewById(R.id.locationSummary_summaryText3);
+
+
+        location.observe(getViewLifecycleOwner(), new Observer<GeocodedNamedLocation>() {
             @Override
             public void onChanged(GeocodedNamedLocation geocodedNamedLocation) {
-                locationNameLabel.setText(
-                        Html.fromHtml(
-                                String.format(
-                                        "<h1>%s: %s</h1>",
-                                        context.getResources().getString(R.string.summary_heading),
-                                        geocodedNamedLocation.getName()
-                                )
-                        )
-                );
+                if (geocodedNamedLocation == null) {
+                    locationNameLabel.setText(
+                            Html.fromHtml(
+                                    String.format(
+                                            "<h1>%s</h1><em>%s</em>",
+                                            context.getResources().getString(R.string.summary_heading),
+                                            context.getResources().getString(R.string.savedlocations_empty)
+                                    )
+                            )
+                    );
+                    temperature.setText("");
+                    rain.setText("");
+                    condition.setText("");
+                } else {
+                    locationNameLabel.setText(
+                            Html.fromHtml(
+                                    String.format(
+                                            "<h1>%s: %s</h1>",
+                                            context.getResources().getString(R.string.summary_heading),
+                                            geocodedNamedLocation.getName()
+                                    )
+                            )
+                    );
+
+                    forecastRepository.getForecastForLocation(
+                            geocodedNamedLocation.getLatitude(),
+                            geocodedNamedLocation.getLongitude()
+                    ).observe(getViewLifecycleOwner(), new Observer<LocationForecast>() {
+                        @Override
+                        public void onChanged(LocationForecast locationForecast) {
+                            temperature.setText(
+                                    Html.fromHtml(
+                                            String.format(
+                                                    Locale.getDefault(),
+                                                    "<p><strong>%s</strong><br />%.0f °C</p>",
+                                                    context.getResources().getString(R.string.temperature_label),
+                                                    locationForecast.getToday().getTemp().getDay()
+                                            )
+                                    )
+                            );
+
+                            rain.setText(
+                                    Html.fromHtml(
+                                            String.format(
+                                                    Locale.getDefault(),
+                                                    "<p><strong>%s</strong><br />%.0f%%</p>",
+                                                    context.getResources().getString(R.string.rain_label),
+                                                    locationForecast.getToday().getRain()
+                                            )
+                                    )
+                            );
+
+                            condition.setText(
+                                    Html.fromHtml(
+                                            String.format(
+                                                    Locale.getDefault(),
+                                                    "<p><strong>%s</strong><br />%s</p>",
+                                                    context.getResources().getString(R.string.condition_label),
+                                                    locationForecast.getToday().getWeather().get(0).getDescription()
+                                            )
+                                    )
+                            );
+                        }
+                    });
+                }
             }
         });
 
+    }
+
+    public void updateLocation(SavedLocation newLocation) {
+        if (newLocation == null) {
+            location.setValue(null);
+        } else {
+            location.setValue(newLocation.toGeocodedNamedLocation());
+        }
     }
 }

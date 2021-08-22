@@ -90,13 +90,11 @@ public class LocationRepository {
                         placeResult.geometry.location.lng
                 ));
 
-                System.out.println("ok");
             }
 
             @Override
             public void onFailure(Throwable e) {
                 // TODO: handle error
-                System.out.println("error");
             }
         });
 

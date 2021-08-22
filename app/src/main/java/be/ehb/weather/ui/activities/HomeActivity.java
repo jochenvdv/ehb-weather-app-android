@@ -1,6 +1,8 @@
 package be.ehb.weather.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -12,6 +14,8 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import be.ehb.weather.R;
+import be.ehb.weather.database.entities.SavedLocation;
+import be.ehb.weather.ui.fragments.LocationSummaryFragment;
 
 public class HomeActivity extends AppCompatActivity {
     @Override
@@ -32,6 +36,16 @@ public class HomeActivity extends AppCompatActivity {
         searchView.setSubmitButtonEnabled(true);
 
         return true;
+    }
+
+    public void updateSummarizedLocation(SavedLocation location) {
+        FragmentContainerView summaryView =
+                (FragmentContainerView) findViewById(R.id.locationSummary_fragment);
+
+        FragmentManager fragmentManager = (FragmentManager) getSupportFragmentManager();
+        LocationSummaryFragment summaryFragment =
+                (LocationSummaryFragment) fragmentManager.findFragmentById(summaryView.getId());
+        summaryFragment.updateLocation(location);
     }
 
 /*    @Override

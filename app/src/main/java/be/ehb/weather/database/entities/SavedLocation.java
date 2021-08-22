@@ -78,6 +78,10 @@ public class SavedLocation {
         );
     }
 
+    public GeocodedNamedLocation toGeocodedNamedLocation() {
+        return new GeocodedNamedLocation(name, placeId, latitude, longitude);
+    }
+
     public NamedLocation toNamedLocation() {
         return new NamedLocation(name, placeId);
     }

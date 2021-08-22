@@ -38,7 +38,7 @@ public class SavedLocationRepository {
     }
 
     public LiveData<List<SavedLocation>> getSavedLocations() {
-        return savedLocations;
+        return savedLocationDao.getAll();
     }
 
     public LiveData<Boolean> isSavedLocation(GeocodedNamedLocation geocodedNamedLocation) {

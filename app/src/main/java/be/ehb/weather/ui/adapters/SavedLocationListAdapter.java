@@ -16,13 +16,14 @@ import be.ehb.weather.R;
 import be.ehb.weather.database.entities.SavedLocation;
 import be.ehb.weather.models.GeocodedNamedLocation;
 import be.ehb.weather.models.NamedLocation;
+import be.ehb.weather.ui.activities.HomeActivity;
 import be.ehb.weather.ui.activities.LocationDetailActivity;
 import be.ehb.weather.ui.activities.SearchLocationActivity;
 
 public class SavedLocationListAdapter extends ArrayAdapter<SavedLocation> {
-    private Activity activity;
+    private HomeActivity activity;
 
-    public SavedLocationListAdapter(Activity activity, Context context, ArrayList<SavedLocation> locations) {
+    public SavedLocationListAdapter(HomeActivity activity, Context context, ArrayList<SavedLocation> locations) {
         super(context, 0, locations);
         this.activity = activity;
     }
@@ -43,6 +44,14 @@ public class SavedLocationListAdapter extends ArrayAdapter<SavedLocation> {
         TextView locationName = (TextView) convertView.findViewById(R.id.savedlocation_name);
         locationName.setText(location.getName());
         locationName.setTag(location);
+
+        locationName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SavedLocation location = (SavedLocation) locationName.getTag();
+                activity.updateSummarizedLocation(location);
+            }
+        });
 
         Button button = (Button) convertView.findViewById(R.id.savedlocation_viewdetail);
 
